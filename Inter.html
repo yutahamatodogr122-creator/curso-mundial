@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#6c5ce7">
+<title>Bem-vindo ao Curso Mundial</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f5fb;
+  color:#202124;
+}
+
+button,input,select{font:inherit}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.hidden{display:none!important}
+
+/* LOGIN */
+.auth{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#6c5ce7,#8e44ad);
+}
+
+.auth-box{
+  width:100%;
+  max-width:430px;
+  background:white;
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 20px 60px #0004;
+}
+
+.logo{
+  text-align:center;
+  font-size:38px;
+  margin-bottom:8px;
+}
+
+.auth h1{
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.auth p{
+  text-align:center;
+  color:#666;
+  margin-bottom:25px;
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.tabs button{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  background:#eee;
+}
+
+.tabs button.active{
+  background:#6c5ce7;
+  color:white;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+
+.field input{
+  width:100%;
+  padding:14px;
+  border:2px solid #ddd;
+  border-radius:12px;
+  outline:none;
+}
+
+.field input:focus{
+  border-color:#6c5ce7;
+}
+
+.primary{
+  width:100%;
+  padding:15px;
+  background:#6c5ce7;
+  color:white;
+  border-radius:13px;
+  font-weight:bold;
+}
+
+/* APP */
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+.sidebar{
+  width:250px;
+  background:white;
+  border-right:1px solid #ddd;
+  padding:20px;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  overflow:auto;
+}
+
+.brand{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:25px;
+  color:#6c5ce7;
+}
+
+.nav button{
+  display:block;
+  width:100%;
+  padding:13px;
+  margin-bottom:8px;
+  text-align:left;
+  background:transparent;
+  border-radius:12px;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#eeeaff;
+  color:#6c5ce7;
+}
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+  padding:25px;
+  max-width:1300px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#6c5ce7;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+}
+
+/* CARDS */
+.card{
+  background:white;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 4px 20px #0000000a;
+}
+
+.hero{
+  background:linear-gradient(135deg,#6c5ce7,#8e44ad);
+  color:white;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.stat{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+}
+
+.stat strong{
+  display:block;
+  font-size:30px;
+  margin-top:5px;
+}
+
+/* LANGUAGES */
+.language-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:15px;
+}
+
+.language{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  cursor:pointer;
+  border:2px solid transparent;
+}
+
+.language:hover{
+  border-color:#6c5ce7;
+  transform:translateY(-2px);
+}
+
+.flag{
+  font-size:35px;
+}
+
+/* LEVELS */
+.levels{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+}
+
+.level{
+  padding:18px;
+  border-radius:16px;
+  background:#eee;
+}
+
+.level.unlocked{
+  background:#e9e4ff;
+  cursor:pointer;
+}
+
+.level.locked{
+  opacity:.5;
+}
+
+/* LESSONS */
+.lesson{
+  background:white;
+  padding:18px;
+  border-radius:16px;
+  margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.lesson button{
+  background:#6c5ce7;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  z-index:50;
+}
+
+.lesson-box{
+  background:white;
+  width:100%;
+  max-width:650px;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:25px;
+  padding:25px;
+}
+
+.progress{
+  height:9px;
+  background:#eee;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0 25px;
+}
+
+.progress div{
+  height:100%;
+  background:#6c5ce7;
+  width:0%;
+}
+
+.exercise{
+  text-align:center;
+}
+
+.exercise-title{
+  color:#777;
+  margin-bottom:15px;
+}
+
+.phrase{
+  padding:25px;
+  background:#f5f3ff;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+
+.phrase-main{
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+.audio{
+  background:#6c5ce7;
+  color:white;
+  padding:13px 20px;
+  border-radius:12px;
+}
+
+.answers{
+  display:grid;
+  gap:10px;
+  margin-top:20px;
+}
+
+.answer{
+  padding:15px;
+  border:2px solid #ddd;
+  background:white;
+  border-radius:13px;
+  text-align:left;
+}
+
+.answer:hover{
+  border-color:#6c5ce7;
+}
+
+.answer.correct{
+  border-color:#27ae60;
+  background:#e9f9ef;
+}
+
+.answer.wrong{
+  border-color:#e74c3c;
+  background:#fff0ef;
+}
+
+.feedback{
+  margin-top:15px;
+  font-weight:bold;
+}
+
+.hint{
+  margin-top:15px;
+  padding:10px;
+  background:#fff8df;
+  border-radius:12px;
+}
+
+/* WORDS */
+.word-bank{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  margin:15px 0;
+}
+
+.word{
+  background:#eeeaff;
+  color:#5b4bc4;
+  padding:10px 14px;
+  border-radius:10px;
+}
+
+.selected-words{
+  min-height:55px;
+  border:2px dashed #bbb;
+  border-radius:14px;
+  padding:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:15px;
+}
+
+/* PROFILE */
+.profile-row{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.big-avatar{
+  width:80px;
+  height:80px;
+  background:#6c5ce7;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+
+/* MOBILE */
+.mobile-nav{
+  display:none;
+}
+
+@media(max-width:800px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:15px;
+    padding-bottom:85px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .mobile-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:white;
+    border-top:1px solid #ddd;
+    z-index:30;
+  }
+
+  .mobile-nav button{
+    flex:1;
+    padding:12px 4px;
+    background:white;
+    font-size:12px;
+  }
+
+  .top{
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="auth" class="auth">
+
+  <div class="auth-box">
+
+    <div class="logo">🌎📚</div>
+
+    <h1>Bem-vindo ao Curso Mundial</h1>
+
+    <p>Aprenda idiomas de verdade, passo a passo.</p>
+
+    <div class="tabs">
+      <button id="loginTab" class="active" onclick="switchAuth('login')">
+        Entrar
+      </button>
+
+      <button id="registerTab" onclick="switchAuth('register')">
+        Criar conta
+      </button>
+    </div>
+
+    <div id="authForm"></div>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+<section id="app" class="app hidden">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      🌎 Curso Mundial
+    </div>
+
+    <div class="nav">
+
+      <button onclick="showPage('home')">🏠 Início</button>
+
+      <button onclick="showPage('languages')">🌍 Idiomas</button>
+
+      <button onclick="showPage('course')">📚 Curso</button>
+
+      <button onclick="showPage('achievements')">🏆 Conquistas</button>
+
+      <button onclick="showPage('profile')">👤 Perfil</button>
+
+      <button onclick="showPage('help')">❓ Ajuda</button>
+
+      <button onclick="logout()">🚪 Sair</button>
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <div class="top">
+
+      <div>
+        <h2 id="pageTitle">Início</h2>
+        <p id="welcomeText"></p>
+      </div>
+
+      <div class="avatar" id="topAvatar">A</div>
+
+    </div>
+
+    <div id="content"></div>
+
+  </main>
+
+
+  <nav class="mobile-nav">
+
+    <button onclick="showPage('home')">🏠<br>Início</button>
+
+    <button onclick="showPage('languages')">🌍<br>Idiomas</button>
+
+    <button onclick="showPage('course')">📚<br>Curso</button>
+
+    <button onclick="showPage('profile')">👤<br>Perfil</button>
+
+  </nav>
+
+</section>
+
+
+<!-- LESSON MODAL -->
+<div id="lessonModal" class="modal hidden">
+
+  <div class="lesson-box">
+
+    <div style="display:flex;justify-content:space-between;align-items:center">
+
+      <h2 id="lessonTitle">Aula</h2>
+
+      <button onclick="closeLesson()" style="font-size:25px;background:none">
+        ×
+      </button>
+
+    </div>
+
+    <div class="progress">
+      <div id="lessonProgress"></div>
+    </div>
+
+    <div id="exerciseArea"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   IDIOMAS
+========================= */
+
+const languages = [
+
+ {id:"es",name:"Espanhol",flag:"🇪🇸"},
+ {id:"en",name:"Inglês",flag:"🇺🇸"},
+ {id:"pt",name:"Português",flag:"🇧🇷"},
+ {id:"de",name:"Alemão",flag:"🇩🇪"},
+ {id:"fr",name:"Francês",flag:"🇫🇷"},
+ {id:"it",name:"Italiano",flag:"🇮🇹"},
+ {id:"ja",name:"Japonês",flag:"🇯🇵"},
+ {id:"zh",name:"Chinês",flag:"🇨🇳"},
+ {id:"ru",name:"Russo",flag:"🇷🇺"},
+ {id:"ko",name:"Coreano",flag:"🇰🇷"},
+ {id:"ar",name:"Árabe",flag:"🇸🇦"},
+ {id:"hi",name:"Hindi",flag:"🇮🇳"},
+ {id:"nl",name:"Holandês",flag:"🇳🇱"},
+ {id:"tr",name:"Turco",flag:"🇹🇷"},
+ {id:"pl",name:"Polonês",flag:"🇵🇱"},
+ {id:"uk",name:"Ucraniano",flag:"🇺🇦"},
+ {id:"el",name:"Grego",flag:"🇬🇷"},
+ {id:"sv",name:"Sueco",flag:"🇸🇪"},
+ {id:"vi",name:"Vietnamita",flag:"🇻🇳"},
+ {id:"id",name:"Indonésio",flag:"🇮🇩"}
+
+];
+
+
+/* =========================
+   LIÇÕES
+   IMPORTANTE:
+   AS TRADUÇÕES NÃO SÃO
+   MOSTRADAS DURANTE A AULA.
+========================= */
+
+const lessons = {
+
+ es:[
+
+  {
+   title:"Saudações",
+   level:"A1",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"Hola, me llamo Ana.",
+     question:"¿Qué significa esta frase?",
+     audio:"Hola, me llamo Ana.",
+     options:[
+      "Hola, mi nombre es Ana.",
+      "Ana vive con mi familia.",
+      "Hasta mañana, Ana.",
+      "Ana está estudiando."
+     ],
+     answer:0
+    },
+
+    {
+     type:"audio",
+     phrase:"Buenos días.",
+     question:"Escucha y elige la expresión que corresponde al audio.",
+     audio:"Buenos días.",
+     options:[
+      "Buenas noches.",
+      "Buenos días.",
+      "Hasta luego.",
+      "Gracias."
+     ],
+     answer:1
+    },
+
+    {
+     type:"fill",
+     phrase:"Me ____ Ana.",
+     question:"Completa la frase.",
+     audio:"Me llamo Ana.",
+     options:["llamo","vivo","gusta","tengo"],
+     answer:0
+    },
+
+    {
+     type:"word",
+     phrase:"",
+     question:"Ordena las palabras para formar la frase correcta.",
+     words:["llamo","Ana","Me"],
+     answer:["Me","llamo","Ana"]
+    },
+
+    {
+     type:"mcq",
+     phrase:"¿Cómo te llamas?",
+     question:"Elige la respuesta más adecuada.",
+     audio:"¿Cómo te llamas?",
+     options:[
+      "Me llamo Carlos.",
+      "Tengo veinte años.",
+      "Vivo en Madrid.",
+      "Buenos días."
+     ],
+     answer:0
+    }
+
+   ]
+  },
+
+  {
+   title:"Apresentações",
+   level:"A1",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"Soy de Brasil.",
+     question:"¿Qué quiere decir la persona?",
+     audio:"Soy de Brasil.",
+     options:[
+      "A pessoa é do Brasil.",
+      "A pessoa está indo para o Brasil.",
+      "A pessoa conhece o Brasil.",
+      "A pessoa mora com um brasileiro."
+     ],
+     answer:0
+    },
+
+    {
+     type:"fill",
+     phrase:"Soy ____ Brasil.",
+     question:"Completa.",
+     audio:"Soy de Brasil.",
+     options:["de","en","por","con"],
+     answer:0
+    },
+
+    {
+     type:"mcq",
+     phrase:"Mucho gusto.",
+     question:"¿En qué situación usarías esta expresión?",
+     audio:"Mucho gusto.",
+     options:[
+      "Ao conhecer alguém.",
+      "Ao pedir comida.",
+      "Ao se despedir.",
+      "Ao perguntar a hora."
+     ],
+     answer:0
+    },
+
+    {
+     type:"word",
+     phrase:"",
+     question:"Ordena la frase.",
+     words:["gusto","Mucho"],
+     answer:["Mucho","gusto"]
+    }
+
+   ]
+  },
+
+  {
+   title:"Rotina",
+   level:"A2",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"Todos los días estudio español.",
+     question:"¿Qué idea expresa la frase?",
+     audio:"Todos los días estudio español.",
+     options:[
+      "A pessoa estuda espanhol todos os dias.",
+      "A pessoa estudou espanhol uma vez.",
+      "A pessoa não gosta de espanhol.",
+      "A pessoa vai estudar amanhã."
+     ],
+     answer:0
+    },
+
+    {
+     type:"fill",
+     phrase:"Todos los días ____ español.",
+     question:"Completa la frase.",
+     audio:"Todos los días estudio español.",
+     options:["estudio","estudié","estudiaré","estudiando"],
+     answer:0
+    },
+
+    {
+     type:"word",
+     phrase:"",
+     question:"Ordena las palabras.",
+     words:["español","estudio","Todos","los","días"],
+     answer:["Todos","los","días","estudio","español"]
+    }
+
+   ]
+  },
+
+  {
+   title:"Conversação",
+   level:"B1",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"¿Qué hiciste ayer?",
+     question:"¿Cuál respuesta tiene sentido?",
+     audio:"¿Qué hiciste ayer?",
+     options:[
+      "Ayer fui al cine.",
+      "Mañana voy al cine.",
+      "Ahora estoy cansado.",
+      "Tengo veinte años."
+     ],
+     answer:0
+    },
+
+    {
+     type:"mcq",
+     phrase:"Aunque estaba cansado, terminé el trabajo.",
+     question:"¿Qué ocurrió?",
+     audio:"Aunque estaba cansado, terminé el trabajo.",
+     options:[
+      "Terminó el trabajo a pesar del cansancio.",
+      "No terminó el trabajo porque estaba cansado.",
+      "Empezó el trabajo mañana.",
+      "Nunca estuvo cansado."
+     ],
+     answer:0
+    },
+
+    {
+     type:"fill",
+     phrase:"Aunque estaba cansado, ____ el trabajo.",
+     question:"Completa usando el verbo correcto.",
+     options:["terminé","termino","terminaré","terminando"],
+     answer:0
+    }
+
+   ]
+  }
+
+ ],
+
+ en:[
+
+  {
+   title:"Greetings",
+   level:"A1",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"Hello, my name is Ana.",
+     question:"What does this sentence communicate?",
+     audio:"Hello, my name is Ana.",
+     options:[
+      "The speaker introduces herself.",
+      "The speaker says goodbye to Ana.",
+      "The speaker asks where Ana lives.",
+      "The speaker says that Ana is late."
+     ],
+     answer:0
+    },
+
+    {
+     type:"audio",
+     phrase:"Good morning.",
+     question:"Listen and choose what you hear.",
+     audio:"Good morning.",
+     options:[
+      "Good night.",
+      "Good morning.",
+      "See you later.",
+      "Thank you."
+     ],
+     answer:1
+    },
+
+    {
+     type:"fill",
+     phrase:"My name ____ Ana.",
+     question:"Complete the sentence.",
+     options:["is","are","am","be"],
+     answer:0
+    }
+
+   ]
+  },
+
+  {
+   title:"Daily life",
+   level:"A2",
+   exercises:[
+
+    {
+     type:"mcq",
+     phrase:"I usually study in the morning.",
+     question:"What does the speaker describe?",
+     audio:"I usually study in the morning.",
+     options:[
+      "A regular habit.",
+      "Something that happened once.",
+      "A plan for next year.",
+      "A question about school."
+     ],
+     answer:0
+    },
+
+    {
+     type:"fill",
+     phrase:"I usually ____ in the morning.",
+     question:"Complete the sentence.",
+     options:["study","studied","studying","studies"],
+     answer:0
+    }
+
+   ]
+  }
+
+ ],
+
+ de:[
+  {
+   title:"Begrüßungen",
+   level:"A1",
+   exercises:[
+    {
+     type:"mcq",
+     phrase:"Guten Morgen!",
+     question:"Welche Situation passt?",
+     audio:"Guten Morgen!",
+     options:[
+      "Uma saudação pela manhã.",
+      "Uma despedida à noite.",
+      "Uma pergunta sobre comida.",
+      "Uma apresentação formal."
+     ],
+     answer:0
+    }
+   ]
+  }
+ ]
+
+};
+
+
+/* =========================
+   LIÇÃO GENÉRICA
+========================= */
+
+function genericLesson(lang){
+
+ const l=languages.find(x=>x.id===lang);
+
+ return [
+
+  {
+   title:"Primeiros passos",
+   level:"A1",
+   exercises:[
+    {
+     type:"audio",
+     phrase:"Olá!",
+     question:"Ouça o áudio e escolha a opção correta.",
+     audio:"Olá!",
+     options:[
+      "Uma saudação.",
+      "Uma despedida.",
+      "Uma pergunta.",
+      "Um pedido."
+     ],
+     answer:0
+    }
+   ]
+  }
+
+ ];
+
+}
+
+
+/* =========================
+   USUÁRIO
+========================= */
+
+let currentUser=null;
+
+let selectedLanguage="es";
+
+let currentLesson=null;
+
+let currentExercise=0;
+
+let lessonScore=0;
+
+let selectedWords=[];
+
+
+/* =========================
+   AUTH
+========================= */
+
+function getUsers(){
+
+ return JSON.parse(localStorage.getItem("curso_users")||"[]");
+
+}
+
+function saveUsers(users){
+
+ localStorage.setItem("curso_users",JSON.stringify(users));
+
+}
+
+function switchAuth(mode){
+
+ document.getElementById("loginTab").classList.toggle("active",mode==="login");
+
+ document.getElementById("registerTab").classList.toggle("active",mode==="register");
+
+ if(mode==="login"){
+
+  document.getElementById("authForm").innerHTML=`
+
+   <div class="field">
+    <label>E-mail</label>
+    <input id="email" type="email">
+   </div>
+
+   <div class="field">
+    <label>Senha</label>
+    <input id="password" type="password">
+   </div>
+
+   <button class="primary" onclick="login()">
+    Entrar
+   </button>
+
+  `;
+
+ }else{
+
+  document.getElementById("authForm").innerHTML=`
+
+   <div class="field">
+    <label>Nome</label>
+    <input id="name">
+   </div>
+
+   <div class="field">
+    <label>E-mail</label>
+    <input id="email" type="email">
+   </div>
+
+   <div class="field">
+    <label>Senha</label>
+    <input id="password" type="password">
+   </div>
+
+   <button class="primary" onclick="register()">
+    Criar minha conta
+   </button>
+
+  `;
+
+ }
+
+}
+
+
+function register(){
+
+ const name=document.getElementById("name").value.trim();
+
+ const email=document.getElementById("email").value.trim().toLowerCase();
+
+ const password=document.getElementById("password").value;
+
+ if(!name||!email||!password){
+
+  alert("Preencha todos os campos.");
+
+  return;
+
+ }
+
+ const users=getUsers();
+
+ if(users.some(u=>u.email===email)){
+
+  alert("Esse e-mail já está cadastrado.");
+
+  return;
+
+ }
+
+ const user={
+
+  id:Date.now(),
+
+  name,
+
+  email,
+
+  password,
+
+  xp:0,
+
+  streak:0,
+
+  language:"es",
+
+  progress:{},
+
+  achievements:[]
+
+ };
+
+ users.push(user);
+
+ saveUsers(users);
+
+ currentUser=user;
+
+ localStorage.setItem("curso_current",email);
+
+ openApp();
+
+}
+
+
+function login(){
+
+ const email=document.getElementById("email").value.trim().toLowerCase();
+
+ const password=document.getElementById("password").value;
+
+ const user=getUsers().find(
+
+  u=>u.email===email&&u.password===password
+
+ );
+
+ if(!user){
+
+  alert("E-mail ou senha incorretos.");
+
+  return;
+
+ }
+
+ currentUser=user;
+
+ localStorage.setItem("curso_current",email);
+
+ openApp();
+
+}
+
+
+function logout(){
+
+ localStorage.removeItem("curso_current");
+
+ currentUser=null;
+
+ document.getElementById("app").classList.add("hidden");
+
+ document.getElementById("auth").classList.remove("hidden");
+
+ switchAuth("login");
+
+}
+
+
+/* =========================
+   ABRIR APP
+========================= */
+
+function openApp(){
+
+ document.getElementById("auth").classList.add("hidden");
+
+ document.getElementById("app").classList.remove("hidden");
+
+ selectedLanguage=currentUser.language||"es";
+
+ updateUI();
+
+ showPage("home");
+
+}
+
+
+/* =========================
+   NAVEGAÇÃO
+========================= */
+
+function showPage(page){
+
+ const title={
+
+  home:"Início",
+
+  languages:"Idiomas",
+
+  course:"Curso",
+
+  achievements:"Conquistas",
+
+  profile:"Perfil",
+
+  help:"Ajuda"
+
+ }[page]||"Curso Mundial";
+
+ document.getElementById("pageTitle").textContent=title;
+
+ document.getElementById("welcomeText").textContent=
+
+  "Olá, "+currentUser.name+"! Vamos continuar aprendendo.";
+
+ if(page==="home") renderHome();
+
+ if(page==="languages") renderLanguages();
+
+ if(page==="course") renderCourse();
+
+ if(page==="achievements") renderAchievements();
+
+ if(page==="profile") renderProfile();
+
+ if(page==="help") renderHelp();
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome(){
+
+ const lang=languages.find(x=>x.id===selectedLanguage);
+
+ const lessonsList=getLessons();
+
+ document.getElementBy
